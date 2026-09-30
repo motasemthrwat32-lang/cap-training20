@@ -1,0 +1,1534 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#07070a">
+<title>CAP ELITE | Personal Training</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Inter:wght@500;600;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<section id="loginScreen" class="login">
+  <div class="login-art">
+    <div class="big" dir="ltr">CAP</div>
+    <h2>نظام التدريب الشخصي <span class="gtext">الاحترافي</span></h2>
+    <p>ابنِ برامج تدريب لعملائك بخريطة عضلات وشرح كامل لكل تمرين، وصدّرها صورة فخمة جاهزة للإرسال.</p>
+    <div class="login-feats">
+      <span><i class="fa-solid fa-database"></i> +800 تمرين</span>
+      <span><i class="fa-solid fa-person-rays"></i> خريطة عضلات</span>
+      <span><i class="fa-solid fa-file-image"></i> تصدير PNG</span>
+      <span><i class="fa-solid fa-file-pdf"></i> تصدير PDF</span>
+    </div>
+  </div>
+  <div class="login-side">
+    <div class="login-card">
+      <div class="login-logo"><i class="fa-solid fa-dumbbell"></i></div>
+      <h1 dir="ltr">CAP <span class="gtext">ELITE</span></h1>
+      <p class="sub">أهلاً يا كابتن، أدخل رمز الدخول لفتح النظام</p>
+      <form id="loginForm" autocomplete="off">
+        <label>رمز المدرب</label>
+        <div class="pass-wrap">
+          <i class="fa-solid fa-lock"></i>
+          <input id="accessCode" type="password" placeholder="••••••••" required>
+          <button id="toggleCode" class="eye" type="button" aria-label="إظهار الرمز"><i class="fa-solid fa-eye"></i></button>
+        </div>
+        <button class="btn btn-gold btn-block" type="submit" style="margin-top:16px;padding:15px"><i class="fa-solid fa-right-to-bracket"></i> دخول النظام</button>
+        <p id="loginError" class="login-err"></p>
+      </form>
+      <div class="login-foot">PERSONAL TRAINING SYSTEM</div>
+    </div>
+  </div>
+</section>
+
+<div id="app" hidden>
+  <div class="shell">
+    <aside class="side">
+      <div class="brand" dir="ltr">
+        <div class="brand-logo"><i class="fa-solid fa-dumbbell"></i></div>
+        <div><b>CAP <span class="gold">ELITE</span></b><small>TRAINING SYSTEM</small></div>
+      </div>
+      <div class="coach-card">
+        <small><i class="fa-solid fa-user-tie gold"></i> الكابتن</small>
+        <b class="js-coach"></b>
+      </div>
+      <nav class="nav">
+        <div class="nav-label">MENU</div>
+        <button type="button" data-go="secCats" class="active"><i class="fa-solid fa-layer-group"></i> أقسام التمارين</button>
+        <button type="button" data-go="secBuild"><i class="fa-solid fa-user-gear"></i> بناء البرنامج</button>
+        <button type="button" data-go="secPreview"><i class="fa-solid fa-eye"></i> المعاينة</button>
+        <button type="button" class="js-export"><i class="fa-solid fa-file-image"></i> تصدير PNG</button>
+        <button type="button" class="js-pdf"><i class="fa-solid fa-file-pdf"></i> تصدير PDF</button>
+      </nav>
+      <div class="side-meter">
+        <small>التمارين في البرنامج</small>
+        <div class="n"><span class="js-count gtext">0</span></div>
+        <div class="bar"><span id="sideBar"></span></div>
+        <button type="button" class="btn btn-ghost btn-sm btn-block js-logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> تسجيل خروج</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="mtop">
+        <div class="brand" dir="ltr">
+          <div class="brand-logo"><i class="fa-solid fa-dumbbell"></i></div>
+          <b>CAP <span class="gold">ELITE</span></b>
+        </div>
+        <div class="who">
+          <span class="js-coach"></span>
+          <button type="button" class="icon-btn js-logout" aria-label="خروج"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
+        </div>
+      </div>
+
+      <header class="hero">
+        <img class="bg" src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1800&q=80" alt="">
+        <div class="hero-ghost" dir="ltr">TRAIN HARD</div>
+        <div class="hero-in">
+          <span class="badge"><span class="live"></span> PERSONAL TRAINING SYSTEM</span>
+          <h1 dir="ltr">CAP <span class="gtext">/ <span class="js-coach"></span></span></h1>
+          <p>صمّم برامج تدريب احترافية في دقائق، مع خريطة العضلات المستهدفة وشرح كامل لكل تمرين.</p>
+          <div class="hero-kpis">
+            <div class="kpi"><b id="heroCount">...</b><span>تمرين متاح</span></div>
+            <div class="kpi"><b>9</b><span>أقسام تدريب</span></div>
+            <div class="kpi"><b class="js-count">0</b><span>في برنامجك</span></div>
+          </div>
+        </div>
+        <div class="ticker" dir="ltr">
+          <div class="ticker-track">
+            <span>MUSCLE MAP</span><span>شرح الأداء بالعربي</span><span>EXPORT PNG</span><span>EXPORT PDF</span><span>نصائح وأخطاء شائعة</span><span>IPHONE READY</span><span>ترتيب ووقت راحة</span>
+            <span>MUSCLE MAP</span><span>شرح الأداء بالعربي</span><span>EXPORT PNG</span><span>EXPORT PDF</span><span>نصائح وأخطاء شائعة</span><span>IPHONE READY</span><span>ترتيب ووقت راحة</span>
+          </div>
+        </div>
+      </header>
+
+      <section id="secCats" class="card card-pad section">
+        <div class="head">
+          <div class="ic"><i class="fa-solid fa-layer-group"></i></div>
+          <div><h2>اختار القسم</h2><p>STEP 01 • CHOOSE MUSCLE GROUP</p></div>
+          <div class="grow"></div>
+          <span class="step-tag">01</span>
+        </div>
+        <div class="cats" id="cats">
+          <button class="cat" type="button" data-cat="chest"><span class="cat-no">01</span><span class="ci"><i class="fa-solid fa-heart-pulse"></i></span><b>الصدر</b><span class="cn" data-count="chest">—</span><i class="fa-solid fa-arrow-left go"></i></button>
+          <button class="cat" type="button" data-cat="back"><span class="cat-no">02</span><span class="ci"><i class="fa-solid fa-dumbbell"></i></span><b>الظهر</b><span class="cn" data-count="back">—</span><i class="fa-solid fa-arrow-left go"></i></button>
+          <button class="cat" type="button" data-cat="legs"><span class="cat-no">03</span><span class="ci"><i class="fa-solid fa-person-walking"></i></span><b>الرجل</b><span class="cn" data-count="legs">—</span><i class="fa-solid fa-arrow-left go"></i></button>
+          <button class="cat" type="button" data-cat="shoulders"><span class="cat-no">04</span><span class="ci"><i class="fa-solid fa-shield-halved"></i></span><b>الكتف</b><span class="cn" data-count="shoulders">—</span><i class="fa-solid fa-arrow-left go"></i></button>
+          <button class="cat" type="button" data-cat="biceps"><span class="cat-no">05</span><span class="ci"><i class="fa-solid fa-hand-fist"></i></span><b>بايسبس</b><span class="cn" data-count="biceps">—</span><i class="fa-solid fa-arrow-left go"></i></button>
+          <button class="cat" type="button" data-cat="triceps"><span class="cat-no">06</span><span class="ci"><i class="fa-solid fa-bolt"></i></span><b>ترايسبس</b><span class="cn" data-count="triceps">—</span><i class="fa-solid fa-arrow-left go"></i></button>
+          <button class="cat" type="button" data-cat="abs"><span class="cat-no">07</span><span class="ci"><i class="fa-solid fa-fire"></i></span><b>بطن</b><span class="cn" data-count="abs">—</span><i class="fa-solid fa-arrow-left go"></i></button>
+          <button class="cat" type="button" data-cat="cardio"><span class="cat-no">08</span><span class="ci"><i class="fa-solid fa-person-running"></i></span><b>كارديو</b><span class="cn" data-count="cardio">—</span><i class="fa-solid fa-arrow-left go"></i></button>
+          <button class="cat" type="button" data-cat="warmup"><span class="cat-no">09</span><span class="ci"><i class="fa-solid fa-stopwatch"></i></span><b>تسخين</b><span class="cn" data-count="warmup">—</span><i class="fa-solid fa-arrow-left go"></i></button>
+        </div>
+        <p class="db-status"><span id="dbDot" class="dot"></span><span id="dbText">جاري تحميل التمارين...</span><button id="dbRetry" class="btn btn-outline btn-sm" type="button" hidden><i class="fa-solid fa-rotate"></i> إعادة المحاولة</button></p>
+      </section>
+
+      <div id="secBuild" class="layout">
+        <section class="card card-pad">
+          <div class="head">
+            <div class="ic"><i class="fa-solid fa-user-gear"></i></div>
+            <div><h2>بيانات البرنامج</h2><p>STEP 02 • PROGRAM INFO</p></div>
+            <div class="grow"></div>
+            <span class="step-tag">02</span>
+          </div>
+          <div class="profile">
+            <button id="avatarBtn" class="avatar" type="button" aria-label="اختيار صورة">
+              <div class="avatar-in" id="avatarIn">ع</div>
+              <span class="cam"><i class="fa-solid fa-camera"></i></span>
+            </button>
+            <div>
+              <b>صورة العميل</b>
+              <small>هتظهر في المعاينة والصورة المصدّرة</small>
+              <div class="acts">
+                <button id="choosePhoto" class="btn btn-ghost btn-sm" type="button"><i class="fa-solid fa-image"></i> اختيار</button>
+                <button id="removePhoto" class="btn btn-ghost btn-sm" type="button"><i class="fa-solid fa-trash"></i> حذف</button>
+              </div>
+            </div>
+            <input id="photoInput" type="file" accept="image/*" hidden>
+          </div>
+          <div class="field"><label><i class="fa-solid fa-user"></i> اسم العميل</label><input id="clientName" placeholder="أحمد محمد"></div>
+          <div class="field"><label><i class="fa-solid fa-file-signature"></i> اسم البرنامج</label><input id="workoutName" placeholder="Push Day"></div>
+          <div class="field">
+            <label><i class="fa-solid fa-ranking-star"></i> مستوى اللاعب</label>
+            <select id="levelSelect">
+              <option value="beginner">مبتدئ</option>
+              <option value="intermediate">متوسط</option>
+              <option value="expert">متقدم</option>
+            </select>
+          </div>
+          <div class="stats">
+            <div class="stat"><strong id="stTotal">0</strong><span>تمرين</span></div>
+            <div class="stat"><strong id="stStrength">0</strong><span>مقاومة</span></div>
+            <div class="stat"><strong id="stCardio">0</strong><span>كارديو</span></div>
+          </div>
+          <div class="save">
+            <button id="exportBtn" class="btn btn-gold btn-block" type="button"><i class="fa-solid fa-file-image"></i> تصدير البرنامج PNG</button>
+            <button id="exportPdfBtn" class="btn btn-outline btn-block" type="button"><i class="fa-solid fa-file-pdf"></i> تصدير البرنامج PDF</button>
+            <button id="shareBtn" class="btn btn-gold btn-block" type="button" hidden><i class="fa-solid fa-share-nodes"></i> مشاركة / حفظ الصورة على iPhone</button>
+            <button id="downloadBtn" class="btn btn-outline btn-block" type="button"><i class="fa-solid fa-download"></i> تحميل صورة البرنامج</button>
+            <button id="openBtn" class="btn btn-ghost btn-block" type="button"><i class="fa-solid fa-image"></i> فتح الصورة للحفظ بالضغط المطوّل</button>
+            <p id="exportStatus" class="status"></p>
+            <p class="hint">على iPhone: استخدم «مشاركة / حفظ الصورة»، أو افتح الصورة واضغط عليها ضغطة مطوّلة.</p>
+          </div>
+        </section>
+        <section class="card card-pad">
+          <div class="head">
+            <div class="ic"><i class="fa-solid fa-list-check"></i></div>
+            <div><h2>التمارين المختارة</h2><p>SELECTED EXERCISES</p></div>
+            <div class="grow"></div>
+            <button id="clearAll" class="btn btn-ghost btn-sm" type="button" hidden><i class="fa-solid fa-broom"></i> مسح الكل</button>
+          </div>
+          <div id="selList" class="sel-list"></div>
+        </section>
+      </div>
+
+      <section id="secPreview" class="card section">
+        <div class="pv-head">
+          <div class="pv-av" id="pvAvatar">ع</div>
+          <div style="min-width:0;position:relative;z-index:1">
+            <div class="pv-kick">STEP 03 • LIVE PREVIEW</div>
+            <h3 id="pvWorkout">برنامج تدريبي</h3>
+            <p id="pvClient">برنامج تدريبي احترافي</p>
+            <span id="pvLevel" class="lvl">المستوى: مبتدئ</span>
+          </div>
+        </div>
+        <div id="pvList" class="pv-list"></div>
+      </section>
+
+      <footer class="footer"><b>CAP ELITE</b> • PERSONAL TRAINING SYSTEM • <span class="js-coach"></span></footer>
+    </main>
+  </div>
+
+  <nav class="dock">
+    <button type="button" data-go="secCats" class="active"><i class="fa-solid fa-layer-group"></i>الأقسام</button>
+    <button type="button" data-go="secBuild"><i class="fa-solid fa-list-check"></i>البرنامج<span class="badge-n js-count-badge" hidden>0</span></button>
+    <button type="button" class="fab js-export"><i class="fa-solid fa-file-arrow-down"></i>تصدير</button>
+    <button type="button" data-go="secPreview"><i class="fa-solid fa-eye"></i>المعاينة</button>
+    <button type="button" class="js-top"><i class="fa-solid fa-house"></i>الرئيسية</button>
+  </nav>
+</div>
+
+<div id="picker" class="modal">
+  <div class="mbox">
+    <button class="mclose" type="button" data-close="picker" aria-label="إغلاق"><i class="fa-solid fa-xmark"></i></button>
+    <div class="mhead"><h2 id="pickerTitle">التمارين</h2><p>اضغط «تفاصيل» أو صورة التمرين عشان تشوف الشرح وطريقة الأداء</p></div>
+    <div class="search"><i class="fa-solid fa-magnifying-glass"></i><input id="pickerSearch" type="search" placeholder="ابحث باسم التمرين..."></div>
+    <div id="pickerCount" class="pcount"></div>
+    <div id="pickerList" class="plist"></div>
+  </div>
+</div>
+
+<div id="detail" class="modal top">
+  <div class="mbox">
+    <button class="mclose" type="button" data-close="detail" aria-label="إغلاق"><i class="fa-solid fa-xmark"></i></button>
+    <div class="mhead"><h2 id="detailTitle">تفاصيل التمرين</h2><p id="detailSub" dir="ltr" style="text-align:right"></p></div>
+    <div id="detailBody" class="dbody"></div>
+    <div class="dfoot"><button id="detailAction" class="btn btn-gold btn-block" type="button"></button></div>
+  </div>
+</div>
+
+<div id="viewer" class="viewer" hidden>
+  <button id="viewerClose" class="btn btn-gold btn-sm close" type="button"><i class="fa-solid fa-xmark"></i> إغلاق</button>
+  <p>اضغط على الصورة ضغطة مطوّلة واختر «حفظ الصورة».</p>
+  <img id="viewerImg" alt="">
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+function showErrorBar(msg){
+  try{
+    var bar=document.getElementById("errbar");
+    if(!bar){bar=document.createElement("div");bar.id="errbar";bar.className="errbar";document.body.appendChild(bar);}
+    bar.innerHTML='<button type="button" onclick="this.parentNode.remove()">×</button>⚠ '+String(msg).replace(/</g,"&lt;");
+  }catch(e){}
+}
+window.addEventListener("error",function(e){ if(e && e.message) showErrorBar(e.message+(e.lineno?" (line "+e.lineno+")":"")); });
+window.addEventListener("unhandledrejection",function(e){ showErrorBar("Promise: "+((e.reason&&e.reason.message)||e.reason)); });
+</script>
+
+<script>
+"use strict";
+
+/* =========================================================
+   الإعدادات
+   ========================================================= */
+const DEMO_COACHES = [
+  { code: "ENGY@2",  name: "ENGY ASHRAF" },
+  { code: "ABDO@1", name: "ABDO OSMAN" }
+];
+const SESSION_KEY = "capEliteCoach";
+const TARGET_EXERCISES = 10;
+const EXERCISES_PER_PAGE = 5;
+
+const DB_URLS = [
+  "https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/dist/exercises.json",
+  "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/dist/exercises.json"
+];
+const IMG_BASES = [
+  "https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/",
+  "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/"
+];
+const CUSTOM_IMAGES = {};
+
+const CATEGORY_NAMES = { chest:"الصدر", back:"الظهر", legs:"الرجل", shoulders:"الكتف", biceps:"البايسبس", triceps:"الترايسبس", abs:"البطن", cardio:"الكارديو", warmup:"التسخين" };
+const LEVEL_NAMES = { beginner:"مبتدئ", intermediate:"متوسط", expert:"متقدم" };
+const MECHANIC_NAMES = { compound:"مركّب", isolation:"عزل" };
+const FORCE_NAMES = { push:"دفع", pull:"سحب", static:"ثبات" };
+const EQUIPMENT_NAMES = {
+  dumbbell:"دامبل", barbell:"بار", machine:"جهاز", cable:"كابل", "body only":"وزن الجسم",
+  kettlebells:"كيتل بل", bands:"أستك مقاومة", "e-z curl bar":"بار زد", "medicine ball":"كرة طبية",
+  "exercise ball":"كرة سويسرية", "foam roll":"فوم رولر", other:"أداة أخرى"
+};
+
+const ARABIC_NAMES = {
+  "Barbell Bench Press":"بنش بار","Barbell Squat":"سكوات بار","Deadlift":"ديدليفت","Barbell Deadlift":"ديدليفت بار",
+  "Pull-Up":"عقلة","Chin-Up":"عقلة قبضة عكسية","Push-Up":"ضغط","Pushups":"ضغط","Dumbbell Bench Press":"بنش دامبل",
+  "Incline Dumbbell Press":"بنش علوي دامبل","Incline Barbell Bench Press":"بنش علوي بار","Dumbbell Flyes":"فلاي دامبل",
+  "Dumbbell Fly":"فلاي دامبل","Cable Crossover":"كروس أوفر","Barbell Curl":"باي بار","Dumbbell Curl":"باي دامبل",
+  "Hammer Curls":"هامر كيرل","Hammer Curl":"هامر كيرل","Preacher Curl":"بريشر كيرل","Triceps Pushdown":"تراي كابل",
+  "Skullcrusher":"سكل كراشر","Military Press":"ميلتري برس","Dumbbell Shoulder Press":"ضغط كتف دامبل",
+  "Side Lateral Raise":"رفرفة جانبي","Lateral Raise":"رفرفة جانبي","Front Dumbbell Raise":"رفرفة أمامي",
+  "Bent Over Barbell Row":"تجديف بار","Barbell Row":"تجديف بار","Dumbbell Row":"تجديف دامبل",
+  "Seated Cable Rows":"سحب أرضي","Wide-Grip Lat Pulldown":"سحب عالي واسع","Lat Pulldown":"سحب عالي",
+  "Leg Press":"ليج برس","Leg Extensions":"ليج إكستنشن","Leg Extension":"ليج إكستنشن","Lying Leg Curls":"ليج كيرل",
+  "Leg Curl":"ليج كيرل","Romanian Deadlift":"رومانيان ديدليفت","Lunges":"لانجز","Crunches":"كرنش","Crunch":"كرنش",
+  "Sit-Up":"سيت أب","Plank":"بلانك","Russian Twist":"روسيان تويست","Rope Jumping":"نط حبل","Jump Rope":"نط حبل",
+  "Running, Treadmill":"جري على المشاية","Running":"جري","Treadmill":"جري على المشاية"
+};
+
+const MUSCLE_AR = {
+  chest:"الصدر", shoulders:"الكتف", biceps:"البايسبس", triceps:"الترايسبس", forearms:"الساعد",
+  abdominals:"البطن", quadriceps:"الفخذ الأمامي", hamstrings:"الفخذ الخلفي", glutes:"المؤخرة",
+  calves:"السمانة", adductors:"الفخذ الداخلي", abductors:"الفخذ الخارجي", lats:"المجانص (اللاتس)",
+  "middle back":"منتصف الظهر", "lower back":"أسفل الظهر", traps:"الترابيس", neck:"الرقبة"
+};
+
+const MUSCLE_BENEFIT = {
+  chest:"بيقوّي ويكبّر عضلة الصدر ويحسّن قوة الدفع في الحياة اليومية وباقي التمارين.",
+  shoulders:"بيبني أكتاف أعرض وأقوى ويحسّن ثبات مفصل الكتف وشكل الجزء العلوي.",
+  biceps:"بيكبّر ويقوّي البايسبس ويحسّن قوة السحب وثني الكوع.",
+  triceps:"بيقوّي الترايسبس، وده أكبر جزء في الذراع، وبيحسّن قوة الدفع.",
+  forearms:"بيقوّي الساعد وقبضة اليد، وده بيساعدك تمسك أوزان أتقل.",
+  abdominals:"بيقوّي البطن والجذع (الكور) ويحسّن ثبات الجسم ويحمي أسفل الظهر.",
+  quadriceps:"بيقوّي الفخذ الأمامي ويحسّن قوة الرجل في المشي والجري والطلوع.",
+  hamstrings:"بيقوّي الفخذ الخلفي ويحسّن السرعة ويقلّل إصابات الركبة.",
+  glutes:"بيقوّي ويشكّل المؤخرة ويحسّن قوة الحوض وثبات الجسم.",
+  calves:"بيقوّي السمانة ويحسّن ثبات الكاحل والقفز والجري.",
+  adductors:"بيقوّي الفخذ الداخلي ويحسّن ثبات الحوض والركبة.",
+  abductors:"بيقوّي الفخذ الخارجي ويحسّن توازن الحوض أثناء الحركة.",
+  lats:"بيعرّض الظهر (شكل V) ويقوّي حركات السحب ويحسّن القوام.",
+  "middle back":"بيزوّد سُمك منتصف الظهر ويحسّن وضعية الكتفين.",
+  "lower back":"بيقوّي أسفل الظهر ويحمي العمود الفقري.",
+  traps:"بيقوّي الترابيس ويحسّن ثبات الكتفين والرقبة.",
+  neck:"بيقوّي عضلات الرقبة ويحسّن ثباتها."
+};
+
+const EQUIP_SETUP = {
+  barbell:"حمّل البار بوزن مناسب لمستواك وامسكه بقبضة ثابتة ومتساوية من الناحيتين.",
+  dumbbell:"اختار دامبلز بوزن مناسب وامسك واحد في كل إيد بقبضة ثابتة.",
+  "e-z curl bar":"امسك البار الزد من الانحناءات بقبضة مريحة للرسغ.",
+  cable:"اضبط البكرة على الارتفاع المناسب واختار الوزن وركّب المقبض المناسب.",
+  machine:"اضبط المقعد والوسادات على مقاس جسمك عشان المفصل يكون على محور الجهاز.",
+  "body only":"اتخذ الوضع الصحيح مع الانتباه لوضع اليدين والرجلين.",
+  kettlebells:"امسك الكيتل بل من المقبض بقبضة ثابتة ووقف بثبات.",
+  bands:"ثبّت الأستك كويس واختار مقاومة مناسبة لمستواك.",
+  "medicine ball":"امسك الكرة الطبية بالإيدين الاتنين قريب من جسمك.",
+  "exercise ball":"استخدم الكرة السويسرية كقاعدة ثابتة واتأكد إنها منفوخة كويس.",
+  "foam roll":"حط الفوم رولر تحت العضلة المطلوبة واتحكّم في وزنك بإيديك.",
+  other:"جهّز الأداة المطلوبة في مكان آمن واتخذ وضعية ثابتة."
+};
+
+/* =========================================================
+   الحالة
+   ========================================================= */
+const state = { coach:"", all:[], selected:[], cat:"", visible:30, loading:false, photo:"", detailId:null };
+const exp = { urls:[], blobs:[], names:[], timer:null, gen:0, promise:null };
+const imgCache = new Map();
+const IS_IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+
+/* =========================================================
+   أدوات مساعدة
+   ========================================================= */
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+const esc = v => String(v == null ? "" : v).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+const safeName = v => String(v || "").trim().replace(/[^a-zA-Z0-9\u0600-\u06FF]+/g,"-") || "workout";
+const findEx = id => state.all.find(e => e.id === id);
+const isSel = id => state.selected.some(s => s.id === id);
+const levelName = () => LEVEL_NAMES[$("#levelSelect").value] || "مبتدئ";
+const arName = ex => ARABIC_NAMES[ex.name] || ex.name;
+
+let toastT = null;
+function toast(msg){
+  const t = $("#toast");
+  t.textContent = msg; t.classList.add("show");
+  clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove("show"), 2600);
+}
+
+const FALLBACK_IMAGE = (() => {
+  try{
+    const c = document.createElement("canvas"); c.width = 160; c.height = 120;
+    const x = c.getContext("2d");
+    x.fillStyle = "#18181e"; x.fillRect(0,0,160,120);
+    x.fillStyle = "#e0b83f"; x.font = "bold 30px Arial"; x.textAlign = "center"; x.textBaseline = "middle";
+    x.fillText("CAP", 80, 60);
+    return c.toDataURL("image/png");
+  }catch(e){ return ""; }
+})();
+
+function imgUrl(ex, i = 0, base = 0){
+  if (i === 0 && CUSTOM_IMAGES[ex.id]) return CUSTOM_IMAGES[ex.id];
+  const p = ex && ex.images && ex.images[i];
+  if (!p) return "";
+  return /^https?:\/\//i.test(p) ? p : IMG_BASES[base] + p;
+}
+function imgAttrs(ex, i = 0){
+  return `src="${esc(imgUrl(ex,i,0))}" data-alt="${esc(imgUrl(ex,i,1))}" data-fb="1" alt="" loading="lazy"`;
+}
+document.addEventListener("error", e => {
+  const img = e.target;
+  if (!img || img.tagName !== "IMG" || img.dataset.fb !== "1") return;
+  if (img.dataset.alt && !img.dataset.triedAlt){ img.dataset.triedAlt = "1"; img.src = img.dataset.alt; }
+  else if (FALLBACK_IMAGE && img.src !== FALLBACK_IMAGE){ img.src = FALLBACK_IMAGE; }
+}, true);
+
+/* =========================================================
+   خريطة العضلات
+   ========================================================= */
+const BW = 120, BH = 225, BGAP = 8;
+function sym(m,x,y,rx,ry,rot=0){ return [{t:"e",m,x,y,rx,ry,rot},{t:"e",m,x:BW-x,y,rx,ry,rot:-rot}]; }
+const BODY_FRONT = [
+  {t:"e",m:null,x:60,y:18,rx:12,ry:15},
+  {t:"r",m:"neck",x:54,y:31,w:12,h:11,r:4},
+  ...sym("traps",47,42,9,4,-0.3),
+  ...sym("shoulders",36,51,11,10),
+  ...sym("chest",48,61,12,10),
+  ...sym("biceps",29,76,7,13,0.15),
+  ...sym("forearms",24,103,6,14,0.12),
+  ...sym(null,21,124,5,7),
+  {t:"r",m:"abdominals",x:50,y:73,w:20,h:38,r:6},
+  ...sym("abdominals",43,91,5,14),
+  ...sym("abductors",38,134,4,14),
+  ...sym("quadriceps",47,145,10,27),
+  ...sym("adductors",55,132,4,14),
+  ...sym(null,47,176,6,5),
+  ...sym("calves",46,196,7,19),
+  ...sym(null,46,219,7,4)
+];
+const BODY_BACK = [
+  {t:"e",m:null,x:60,y:18,rx:12,ry:15},
+  {t:"r",m:"neck",x:54,y:31,w:12,h:11,r:4},
+  {t:"e",m:"traps",x:60,y:50,rx:19,ry:11},
+  ...sym("shoulders",36,51,11,10),
+  ...sym("triceps",29,77,7,13,0.15),
+  ...sym("forearms",24,103,6,14,0.12),
+  ...sym(null,21,124,5,7),
+  ...sym("lats",46,80,10,20,0.15),
+  {t:"e",m:"middle back",x:60,y:70,rx:8,ry:13},
+  {t:"r",m:"lower back",x:51,y:88,w:18,h:18,r:6},
+  ...sym("abductors",39,118,4,10),
+  ...sym("glutes",50,119,11,11),
+  ...sym("hamstrings",47,151,9,23),
+  ...sym("adductors",55,142,3,11),
+  ...sym(null,47,176,6,5),
+  ...sym("calves",46,196,8,18),
+  ...sym(null,46,219,7,4)
+];
+const FRONT_ONLY = ["chest","biceps","abdominals","quadriceps"];
+const BACK_ONLY  = ["triceps","lats","middle back","lower back","glutes","hamstrings"];
+const mapCache = new Map();
+
+function shapePath(ctx,s){
+  ctx.beginPath();
+  if(s.t==="e"){ ctx.ellipse(s.x,s.y,s.rx,s.ry,s.rot||0,0,Math.PI*2); return; }
+  const {x,y,w,h,r}=s;
+  ctx.moveTo(x+r,y); ctx.lineTo(x+w-r,y); ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+  ctx.lineTo(x+w,y+h-r); ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  ctx.lineTo(x+r,y+h); ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+  ctx.lineTo(x,y+r); ctx.quadraticCurveTo(x,y,x+r,y); ctx.closePath();
+}
+function muscleViews(ex){
+  const primary=new Set((ex.primaryMuscles||[]).filter(m=>MUSCLE_AR[m]));
+  const secondary=new Set((ex.secondaryMuscles||[]).filter(m=>MUSCLE_AR[m]&&!primary.has(m)));
+  if(!primary.size&&!secondary.size) return null;
+  const all=[...primary,...secondary];
+  let front=all.some(m=>FRONT_ONLY.includes(m));
+  let back=all.some(m=>BACK_ONLY.includes(m));
+  if(!front&&!back){front=true;back=true;}
+  const views=[];
+  if(front) views.push({shapes:BODY_FRONT,label:"أمام"});
+  if(back)  views.push({shapes:BODY_BACK,label:"خلف"});
+  return{primary,secondary,views,width:views.length*BW+(views.length-1)*BGAP,height:BH+16};
+}
+function drawMuscleViews(ctx,mv){
+  mv.views.forEach((v,i)=>{
+    ctx.save(); ctx.translate(i*(BW+BGAP),0);
+    v.shapes.forEach(s=>{
+      shapePath(ctx,s);
+      ctx.fillStyle=(s.m&&mv.primary.has(s.m))?"#dc2626":(s.m&&mv.secondary.has(s.m))?"#fb923c":"#d5dae0";
+      ctx.fill(); ctx.lineWidth=1; ctx.strokeStyle="#8f98a3"; ctx.stroke();
+    });
+    ctx.fillStyle="#64748b"; ctx.font="bold 10px Cairo, Arial"; ctx.textAlign="center";
+    ctx.fillText(v.label,BW/2,BH+11);
+    ctx.restore();
+  });
+}
+function muscleImage(ex){
+  const mv=muscleViews(ex);
+  if(!mv) return "";
+  const key=[...mv.primary].sort().join(",")+"|"+[...mv.secondary].sort().join(",")+"|"+mv.views.length;
+  if(mapCache.has(key)) return mapCache.get(key);
+  try{
+    const sc=3,c=document.createElement("canvas");
+    c.width=mv.width*sc; c.height=mv.height*sc;
+    const ctx=c.getContext("2d"); ctx.scale(sc,sc);
+    ctx.fillStyle="#fff"; ctx.fillRect(0,0,mv.width,mv.height);
+    drawMuscleViews(ctx,mv);
+    const url=c.toDataURL("image/png");
+    mapCache.set(key,url);
+    return url;
+  }catch(e){return "";}
+}
+function mapHTML(ex,size=""){
+  const src=muscleImage(ex);
+  return src?`<div class="mmap ${size}"><img src="${src}" alt="العضلات المستهدفة"></div>`:"";
+}
+function tagsHTML(ex){
+  const p=(ex.primaryMuscles||[]).filter(m=>MUSCLE_AR[m]).map(m=>`<span class="tag p">${MUSCLE_AR[m]}</span>`).join("");
+  const s=(ex.secondaryMuscles||[]).filter(m=>MUSCLE_AR[m]).map(m=>`<span class="tag s">${MUSCLE_AR[m]}</span>`).join("");
+  return(p||s)?`<div class="tags">${p}${s}</div>`:"";
+}
+
+/* =========================================================
+   الشرح العربي
+   ========================================================= */
+function arList(arr){
+  const n=[...new Set((arr||[]).filter(m=>MUSCLE_AR[m]).map(m=>MUSCLE_AR[m]))];
+  if(n.length<=1) return n[0]||"";
+  return n.slice(0,-1).join("، ")+" و"+n[n.length-1];
+}
+function typeSentence(ex){
+  const c=String(ex.category||"").toLowerCase();
+  if(ex.cat==="cardio"||c==="cardio") return "تمرين كارديو بيرفع معدل ضربات القلب، ويحسّن اللياقة والتحمّل، ويساعد على حرق الدهون.";
+  if(ex.cat==="warmup"||c==="stretching") return "تمرين إطالة وتسخين بيحسّن المرونة ومدى الحركة، ويجهّز العضلات، ويقلّل خطر الإصابة.";
+  if(c==="plyometrics") return "تمرين بلايومتري (انفجاري) بيطوّر القوة الانفجارية والسرعة والرشاقة.";
+  if(c==="olympic weightlifting"||c==="powerlifting"||c==="strongman") return "تمرين قوة ثقيل بيطوّر القوة القصوى والتناسق بين عضلات الجسم كله.";
+  if(ex.mechanic==="compound") return "تمرين مركّب بيشغّل أكتر من مفصل في نفس الوقت، فبيبني قوة وكتلة عضلية ويحرق سعرات أعلى.";
+  if(ex.mechanic==="isolation") return "تمرين عزل بيركّز على عضلة واحدة، ممتاز لتشكيل العضلة وتحسين تفاصيلها.";
+  return "تمرين مقاومة بيقوّي العضلات المستهدفة ويحسّن التحكّم في الحركة.";
+}
+function benefit(ex){
+  const p=arList(ex.primaryMuscles);
+  const s=arList((ex.secondaryMuscles||[]).filter(m=>!(ex.primaryMuscles||[]).includes(m)));
+  let t=p?`بيستهدف بشكل أساسي ${p}${s?`، وبيشارك معاه ${s}`:""}. `:"";
+  t+=typeSentence(ex);
+  const main=(ex.primaryMuscles||[]).find(m=>MUSCLE_BENEFIT[m]);
+  if(main&&ex.cat!=="cardio"&&ex.cat!=="warmup") t+=" "+MUSCLE_BENEFIT[main];
+  return t;
+}
+function shortBenefit(ex){
+  if(ex.cat==="cardio"||ex.cat==="warmup") return typeSentence(ex);
+  const main=(ex.primaryMuscles||[]).find(m=>MUSCLE_BENEFIT[m]);
+  return main?MUSCLE_BENEFIT[main]:typeSentence(ex);
+}
+function howTo(ex){
+  const c=String(ex.category||"").toLowerCase();
+  const setup=EQUIP_SETUP[ex.equipment]||EQUIP_SETUP.other;
+  if(ex.cat==="cardio"||c==="cardio") return[
+    "ابدأ بـ 3 إلى 5 دقائق بسرعة هادية كتسخين.",setup,
+    "زوّد السرعة أو المقاومة تدريجيًا لحد مجهود متوسط تقدر تتكلم فيه بصعوبة.",
+    "حافظ على ظهر مستقيم وتنفّس منتظم.",
+    "كمّل المدة المطلوبة، وبعدها هدّي السرعة 3 دقائق قبل ما تقف."
+  ];
+  if(ex.cat==="warmup"||c==="stretching") return[
+    "اتخذ الوضعية المطلوبة بهدوء ومن غير اندفاع.",
+    "ادخل في الإطالة تدريجيًا لحد ما تحس بشدّ خفيف، مش ألم.",
+    "اثبت 20 إلى 30 ثانية مع تنفّس عميق وبطيء.",
+    "ارجع ببطء وكرّر على الناحية التانية لو التمرين من ناحية واحدة.",
+    "كرّر 2 إلى 3 مرات."
+  ];
+  const st=[setup,"شدّ عضلات البطن، وخلّي ظهرك في وضعه الطبيعي وصدرك مفتوح وكتافك لورا."];
+  if(ex.force==="push") st.push("ادفع الوزن بتحكّم مع الزفير لحد نهاية الحركة من غير ما تقفل المفصل تمامًا.");
+  else if(ex.force==="pull") st.push("اسحب الوزن مع الزفير وركّز إنك تعصر العضلة المستهدفة في نهاية الحركة.");
+  else if(ex.force==="static") st.push("اثبت في الوضع المطلوب مع تنفّس منتظم للمدة المحددة.");
+  else st.push("نفّذ الحركة بتحكّم كامل مع الزفير في الجزء الصعب منها.");
+  if(ex.force!=="static"){
+    st.push("اثبت ثانية في نهاية الحركة، وارجع ببطء (2 إلى 3 ثواني) لنقطة البداية مع الشهيق.");
+    st.push("كرّر العدد المطلوب بنفس الأداء، ولو الأداء بدأ يبوظ خفّف الوزن.");
+  }
+  return st;
+}
+function tips(ex){
+  const t=["ابدأ بوزن خفيف وركّز على الأداء الصحيح قبل ما تزوّد الوزن.","ركّز ذهنيًا على العضلة المستهدفة وحسّ بيها وهي بتشتغل."];
+  if(ex.mechanic==="compound") t.push("سخّن بمجموعة أو اتنين خفاف قبل المجموعات الأساسية.");
+  if(ex.equipment==="barbell") t.push("استخدم مساعد (سبوتر) أو حواجز أمان مع الأوزان التقيلة.");
+  if(ex.cat==="cardio") t.push("اشرب مياه كفاية قبل التمرين وبعده.");
+  if(ex.cat==="warmup") t.push("الإطالة الثابتة أحسن بعد التمرين، والديناميكية أحسن قبله.");
+  return t;
+}
+function mistakes(ex){
+  if(ex.cat==="warmup") return["الشدّ لدرجة الألم.","الحركات المفاجئة أو الارتداد.","حبس النفس."];
+  if(ex.cat==="cardio") return["البدء بسرعة عالية من غير تسخين.","انحناء الظهر أو الاستناد الكامل على الجهاز.","إهمال التهدئة في الآخر."];
+  const m=["وزن تقيل لدرجة إن الجسم كله يتمرجح.","النزول بسرعة من غير تحكّم.","حبس النفس أثناء المجهود."];
+  if(ex.force==="push") m.push("قفل المفصل بقوة في نهاية الدفع.");
+  if(ex.force==="pull") m.push("السحب بالإيدين بس من غير ما تشغّل العضلة المستهدفة.");
+  return m;
+}
+
+/* =========================================================
+   تصنيف التمارين
+   ========================================================= */
+function detectCategory(ex){
+  const name=String(ex.name||"").toLowerCase();
+  const type=String(ex.category||"").toLowerCase();
+  const text=name+" "+(ex.primaryMuscles||[]).join(" ").toLowerCase();
+  if(type==="cardio"||/treadmill|running|cycling|bike|bicycle|elliptical|stair|jump rope|rope jumping|walking/.test(name)) return"cardio";
+  if(type==="stretching"||/stretch|mobility|warm.?up|arm circle|shoulder roll/.test(name)) return"warmup";
+  if(/abdominals|crunch|sit.?up|plank|russian twist|leg raise/.test(text)) return"abs";
+  if(/chest|bench press|push.?up|pushup|fly|flye|crossover/.test(text)) return"chest";
+  if(/lats|middle back|lower back|pulldown|pull.?up|row|deadlift/.test(text)) return"back";
+  if(/quadriceps|hamstrings|glutes|calves|adductors|abductors|squat|leg press|lunge/.test(text)) return"legs";
+  if(/shoulder|traps|neck|military press|lateral raise|deltoid/.test(text)) return"shoulders";
+  if(/triceps|pushdown|skullcrusher/.test(text)) return"triceps";
+  if(/biceps|forearms|curl/.test(text)) return"biceps";
+  return"legs";
+}
+
+/* =========================================================
+   الدخول والخروج
+   ========================================================= */
+function showApp(name){
+  state.coach=name;
+  $$(".js-coach").forEach(el=>el.textContent=name);
+  $("#loginScreen").hidden=true;
+  $("#app").hidden=false;
+  window.scrollTo(0,0);
+  renderAll();
+  if(!state.all.length&&!state.loading) loadDatabase();
+}
+function showLogin(){
+  $("#app").hidden=true;
+  $("#loginScreen").hidden=false;
+  $("#accessCode").value="";
+  $("#loginError").textContent="";
+}
+$("#loginForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const coach=DEMO_COACHES.find(c=>c.code===($("#accessCode").value.trim()));
+  if(!coach){$("#loginError").textContent="رمز الدخول غير صحيح";return;}
+  try{sessionStorage.setItem(SESSION_KEY,coach.name);}catch(err){}
+  showApp(coach.name);
+});
+$("#toggleCode").addEventListener("click",()=>{
+  const i=$("#accessCode"),show=i.type==="password";
+  i.type=show?"text":"password";
+  $("#toggleCode i").className=show?"fa-solid fa-eye-slash":"fa-solid fa-eye";
+});
+$$(".js-logout").forEach(b=>b.addEventListener("click",()=>{
+  try{sessionStorage.removeItem(SESSION_KEY);}catch(err){}
+  showLogin();
+}));
+
+/* =========================================================
+   التنقل
+   ========================================================= */
+function setActiveNav(id){
+  $$("[data-go]").forEach(b=>b.classList.toggle("active",b.dataset.go===id));
+}
+$$("[data-go]").forEach(b=>b.addEventListener("click",()=>{
+  const sec=document.getElementById(b.dataset.go);
+  if(sec) sec.scrollIntoView({behavior:"smooth",block:"start"});
+  setActiveNav(b.dataset.go);
+}));
+$$(".js-top").forEach(b=>b.addEventListener("click",()=>{window.scrollTo({top:0,behavior:"smooth"});setActiveNav("secCats");}));
+$$(".js-export").forEach(b=>b.addEventListener("click",()=>$("#exportBtn").click()));
+$$(".js-pdf").forEach(b=>b.addEventListener("click",()=>$("#exportPdfBtn").click()));
+if("IntersectionObserver" in window){
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(en=>{if(en.isIntersecting) setActiveNav(en.target.id);});
+  },{rootMargin:"-40% 0px -55% 0px"});
+  ["secCats","secBuild","secPreview"].forEach(id=>{const el=document.getElementById(id);if(el) io.observe(el);});
+}
+
+/* =========================================================
+   تحميل قاعدة البيانات
+   ========================================================= */
+function setDb(text,type){
+  $("#dbText").textContent=text;
+  $("#dbDot").className="dot"+(type?" "+type:"");
+  $("#dbRetry").hidden=type!=="err";
+}
+async function loadDatabase(){
+  if(state.loading) return;
+  state.loading=true;
+  setDb("جاري تحميل التمارين...","");
+  let data=null;
+  for(const url of DB_URLS){
+    try{
+      const res=await fetch(url,{cache:"force-cache"});
+      if(!res.ok) throw new Error("HTTP "+res.status);
+      data=await res.json();
+      if(data) break;
+    }catch(err){console.warn("DB source failed:",url,err);}
+  }
+  state.loading=false;
+  if(!data){
+    setDb("تعذر تحميل التمارين. تأكد من الإنترنت واضغط إعادة المحاولة.","err");
+    if($("#picker").classList.contains("show")) renderPicker();
+    return;
+  }
+  const list=Array.isArray(data)?data:(data.exercises||[]);
+  state.all=list
+    .filter(ex=>ex&&ex.id&&ex.name&&Array.isArray(ex.images)&&ex.images.length)
+    .map(ex=>Object.assign({},ex,{cat:detectCategory(ex)}));
+  const counts={};
+  state.all.forEach(ex=>counts[ex.cat]=(counts[ex.cat]||0)+1);
+  $$("[data-count]").forEach(el=>el.textContent=(counts[el.dataset.count]||0)+" تمرين");
+  $("#heroCount").textContent=state.all.length;
+  setDb(`التمارين جاهزة (${state.all.length} تمرين) — اضغط على أي قسم.`,"ok");
+  renderAll();
+  if($("#picker").classList.contains("show")) renderPicker();
+}
+$("#dbRetry").addEventListener("click",loadDatabase);
+
+/* =========================================================
+   النوافذ
+   ========================================================= */
+function syncLock(){
+  const po=document.getElementById("pdfOut");
+  const open=$("#picker").classList.contains("show")||$("#detail").classList.contains("show")||!$("#viewer").hidden||!!(po&&!po.hidden);
+  document.body.classList.toggle("lock",open);
+}
+function openPicker(cat){
+  state.cat=cat; state.visible=30;
+  $("#pickerTitle").textContent="تمارين "+(CATEGORY_NAMES[cat]||cat);
+  $("#pickerSearch").value="";
+  $("#picker").classList.add("show");
+  syncLock();
+  renderPicker();
+  $("#pickerList").scrollTop=0;
+}
+function closePicker(){$("#picker").classList.remove("show");syncLock();}
+function closeDetail(){$("#detail").classList.remove("show");state.detailId=null;syncLock();}
+function closeViewer(){$("#viewer").hidden=true;syncLock();}
+
+$("#cats").addEventListener("click",e=>{
+  const b=e.target.closest("[data-cat]");
+  if(b) openPicker(b.dataset.cat);
+});
+$$("[data-close]").forEach(b=>b.addEventListener("click",()=>b.dataset.close==="picker"?closePicker():closeDetail()));
+$("#picker").addEventListener("click",e=>{if(e.target===e.currentTarget) closePicker();});
+$("#detail").addEventListener("click",e=>{if(e.target===e.currentTarget) closeDetail();});
+$("#viewerClose").addEventListener("click",closeViewer);
+document.addEventListener("keydown",e=>{
+  if(e.key!=="Escape") return;
+  const po=document.getElementById("pdfOut");
+  if(po&&!po.hidden){closeOut();return;}
+  if(!$("#viewer").hidden) closeViewer();
+  else if($("#detail").classList.contains("show")) closeDetail();
+  else if($("#picker").classList.contains("show")) closePicker();
+});
+
+/* =========================================================
+   قائمة التمارين
+   ========================================================= */
+function renderPicker(){
+  const box=$("#pickerList");
+  if(!state.all.length){
+    box.innerHTML=state.loading
+      ?`<div class="empty"><i class="fa-solid fa-circle-notch fa-spin"></i> جاري تحميل التمارين...</div>`
+      :`<div class="empty"><i class="fa-solid fa-wifi"></i> التمارين لم تُحمَّل<small>اقفل النافذة واضغط «إعادة المحاولة»</small></div>`;
+    $("#pickerCount").textContent="";
+    return;
+  }
+  const q=$("#pickerSearch").value.trim().toLowerCase();
+  const matches=state.all.filter(ex=>ex.cat===state.cat&&(!q||(ex.name+" "+arName(ex)).toLowerCase().includes(q)));
+  $("#pickerCount").textContent=matches.length+" تمرين متاح في هذا القسم";
+  if(!matches.length){
+    box.innerHTML=`<div class="empty"><i class="fa-solid fa-magnifying-glass"></i> لا توجد تمارين مطابقة</div>`;
+    return;
+  }
+  let html=matches.slice(0,state.visible).map(ex=>{
+    const added=isSel(ex.id);
+    const lvl=ex.level?`<span class="pk-lvl">${LEVEL_NAMES[ex.level]||esc(ex.level)}${EQUIPMENT_NAMES[ex.equipment]?" • "+EQUIPMENT_NAMES[ex.equipment]:""}</span>`:"";
+    return`<div class="pk">
+      <img ${imgAttrs(ex)} data-act="detail" data-id="${esc(ex.id)}">
+      ${mapHTML(ex)}
+      <div style="min-width:0">
+        <div class="pk-name">${esc(arName(ex))}</div>
+        <div class="pk-en">${esc(ex.name)}</div>
+        ${lvl}
+        ${tagsHTML(ex)}
+        <div class="pk-ben">${esc(shortBenefit(ex))}</div>
+      </div>
+      <div class="pk-btns">
+        <button class="btn btn-gold btn-sm" type="button" data-act="add" data-id="${esc(ex.id)}" ${added?"disabled":""}>${added?'<i class="fa-solid fa-check"></i> تم':'<i class="fa-solid fa-plus"></i> إضافة'}</button>
+        <button class="btn btn-ghost btn-sm" type="button" data-act="detail" data-id="${esc(ex.id)}"><i class="fa-solid fa-circle-info"></i> تفاصيل</button>
+      </div>
+    </div>`;
+  }).join("");
+  if(matches.length>state.visible){
+    html+=`<button class="btn btn-outline more" type="button" data-act="more">عرض المزيد (${matches.length-state.visible} متبقي)</button>`;
+  }
+  box.innerHTML=html;
+}
+$("#pickerList").addEventListener("click",e=>{
+  const el=e.target.closest("[data-act]");
+  if(!el) return;
+  const act=el.dataset.act,id=el.dataset.id;
+  if(act==="add") addEx(id);
+  else if(act==="detail") openDetail(id);
+  else if(act==="more"){state.visible+=30;renderPicker();}
+});
+$("#pickerSearch").addEventListener("input",()=>{state.visible=30;renderPicker();});
+
+/* =========================================================
+   التفاصيل
+   ========================================================= */
+function openDetail(id){
+  const ex=findEx(id);
+  if(!ex) return;
+  state.detailId=id;
+  $("#detailTitle").textContent=arName(ex);
+  $("#detailSub").textContent=ex.name;
+  const has2=!!(ex.images&&ex.images[1]);
+  const map=muscleImage(ex);
+  const infos=[
+    ex.level&&`<span class="info"><i class="fa-solid fa-signal"></i><small>المستوى:</small> ${LEVEL_NAMES[ex.level]||esc(ex.level)}</span>`,
+    ex.equipment&&`<span class="info"><i class="fa-solid fa-dumbbell"></i><small>الأداة:</small> ${EQUIPMENT_NAMES[ex.equipment]||esc(ex.equipment)}</span>`,
+    ex.mechanic&&`<span class="info"><i class="fa-solid fa-gears"></i><small>النوع:</small> ${MECHANIC_NAMES[ex.mechanic]||esc(ex.mechanic)}</span>`,
+    ex.force&&`<span class="info"><i class="fa-solid fa-arrows-left-right"></i><small>الحركة:</small> ${FORCE_NAMES[ex.force]||esc(ex.force)}</span>`,
+    `<span class="info"><i class="fa-solid fa-layer-group"></i><small>القسم:</small> ${CATEGORY_NAMES[ex.cat]||"تمرين"}</span>`
+  ].filter(Boolean).join("");
+  const en=(ex.instructions||[]).filter(Boolean);
+  const li=arr=>arr.map(s=>`<li>${esc(s)}</li>`).join("");
+  $("#detailBody").innerHTML=`
+    <div class="dtop">
+      <div class="dimgs ${has2?"":"one"}">
+        <figure><img ${imgAttrs(ex,0)}><figcaption>${has2?"بداية الحركة":"التمرين"}</figcaption></figure>
+        ${has2?`<figure><img ${imgAttrs(ex,1)}><figcaption>نهاية الحركة</figcaption></figure>`:""}
+      </div>
+      <div>
+        ${map?`<div class="dmap"><img src="${map}" alt=""></div><div class="legend"><span class="p">عضلة أساسية</span><span class="s">عضلة مساعدة</span></div>`:""}
+        ${tagsHTML(ex)}
+      </div>
+    </div>
+    <div class="infos">${infos}</div>
+    <div class="dsec"><h3><i class="fa-solid fa-bullseye"></i> التمرين ده بيعمل إيه في الجسم؟</h3>${esc(benefit(ex))}</div>
+    <div class="dsec"><h3><i class="fa-solid fa-person-chalkboard"></i> طريقة الأداء خطوة بخطوة</h3><ol>${li(howTo(ex))}</ol></div>
+    <div class="dsec"><h3><i class="fa-solid fa-lightbulb"></i> نصائح مهمة</h3><ul class="ok">${li(tips(ex))}</ul></div>
+    <div class="dsec"><h3><i class="fa-solid fa-triangle-exclamation"></i> أخطاء شائعة تجنّبها</h3><ul class="bad">${li(mistakes(ex))}</ul></div>
+    ${en.length?`<div class="dsec ltr"><h3><i class="fa-solid fa-language"></i> الخطوات التفصيلية (من قاعدة البيانات)</h3><ol>${li(en)}</ol></div>`:""}
+  `;
+  updateDetailAction();
+  $("#detail").classList.add("show");
+  $("#detailBody").scrollTop=0;
+  syncLock();
+}
+function updateDetailAction(){
+  if(!state.detailId) return;
+  const b=$("#detailAction"),added=isSel(state.detailId);
+  b.className="btn btn-block "+(added?"btn-danger":"btn-gold");
+  b.innerHTML=added?'<i class="fa-solid fa-trash"></i> إزالة من البرنامج':'<i class="fa-solid fa-plus"></i> إضافة للبرنامج';
+}
+$("#detailAction").addEventListener("click",()=>{
+  const id=state.detailId;
+  if(!id) return;
+  if(isSel(id)) removeEx(id); else addEx(id);
+});
+
+/* =========================================================
+   التمارين المختارة
+   ========================================================= */
+function addEx(id){
+  if(!id||isSel(id)) return;
+  state.selected.push({id,sets:3,reps:12,rest:60});
+  renderAll();
+  toast("تمت إضافة التمرين 🔥");
+}
+function removeEx(id){
+  state.selected=state.selected.filter(s=>s.id!==id);
+  renderAll();
+}
+function moveEx(i,dir){
+  const j=i+dir;
+  if(j<0||j>=state.selected.length) return;
+  const a=state.selected;
+  [a[i],a[j]]=[a[j],a[i]];
+  renderAll();
+}
+function renderSelected(){
+  const box=$("#selList");
+  $("#clearAll").hidden=!state.selected.length;
+  if(!state.selected.length){
+    box.innerHTML=`<div class="empty"><i class="fa-solid fa-dumbbell"></i> لم تضف أي تمرين بعد<small>اختر قسمًا من الأعلى ثم أضف التمارين.</small></div>`;
+    return;
+  }
+  const last=state.selected.length-1;
+  box.innerHTML=state.selected.map((it,i)=>{
+    const ex=findEx(it.id);
+    if(!ex) return"";
+    return`<div class="sel">
+      <img ${imgAttrs(ex)}>
+      <div style="min-width:0">
+        <div class="sel-name"><span class="num">${i+1}</span><span>${esc(arName(ex))}</span></div>
+        <div class="ctrls">
+          <label>مجموعات <input class="mini" type="number" min="1" inputmode="numeric" data-i="${i}" data-f="sets" value="${it.sets}"></label>
+          <label>تكرار <input class="mini" type="number" min="1" inputmode="numeric" data-i="${i}" data-f="reps" value="${it.reps}"></label>
+          <label>راحة (ث) <input class="mini" type="number" min="0" inputmode="numeric" data-i="${i}" data-f="rest" value="${it.rest}"></label>
+        </div>
+      </div>
+      <div class="sel-acts">
+        <button class="icon-btn" type="button" data-act="up" data-i="${i}" ${i===0?"disabled":""} aria-label="لفوق"><i class="fa-solid fa-arrow-up"></i></button>
+        <button class="icon-btn" type="button" data-act="info" data-i="${i}" aria-label="تفاصيل"><i class="fa-solid fa-circle-info"></i></button>
+        <button class="icon-btn" type="button" data-act="down" data-i="${i}" ${i===last?"disabled":""} aria-label="لتحت"><i class="fa-solid fa-arrow-down"></i></button>
+        <button class="icon-btn del" type="button" data-act="del" data-i="${i}" aria-label="حذف"><i class="fa-solid fa-trash"></i></button>
+      </div>
+    </div>`;
+  }).join("");
+}
+$("#selList").addEventListener("click",e=>{
+  const b=e.target.closest("[data-act]");
+  if(!b||b.disabled) return;
+  const i=+b.dataset.i,it=state.selected[i];
+  if(!it) return;
+  if(b.dataset.act==="up") moveEx(i,-1);
+  else if(b.dataset.act==="down") moveEx(i,1);
+  else if(b.dataset.act==="del") removeEx(it.id);
+  else if(b.dataset.act==="info") openDetail(it.id);
+});
+$("#selList").addEventListener("input",e=>{
+  const inp=e.target.closest(".mini");
+  if(!inp) return;
+  const it=state.selected[+inp.dataset.i];
+  if(!it) return;
+  const f=inp.dataset.f,n=parseInt(inp.value,10);
+  it[f]=f==="rest"?Math.max(0,isNaN(n)?0:n):Math.max(1,isNaN(n)?1:n);
+  renderPreview();
+  scheduleExport();
+});
+$("#clearAll").addEventListener("click",()=>{
+  if(!state.selected.length) return;
+  if(!confirm("متأكد إنك عايز تمسح كل التمارين؟")) return;
+  state.selected=[];
+  renderAll();
+  toast("تم مسح كل التمارين");
+});
+
+/* =========================================================
+   الإحصائيات وصورة العميل
+   ========================================================= */
+function getStats(){
+  const cats=state.selected.map(s=>(findEx(s.id)||{}).cat);
+  const cardio=cats.filter(c=>c==="cardio").length;
+  const warm=cats.filter(c=>c==="warmup").length;
+  return{total:state.selected.length,cardio,strength:state.selected.length-cardio-warm};
+}
+function renderStats(){
+  const s=getStats();
+  $("#stTotal").textContent=s.total;
+  $("#stStrength").textContent=s.strength;
+  $("#stCardio").textContent=s.cardio;
+  $$(".js-count").forEach(el=>el.textContent=s.total);
+  $$(".js-count-badge").forEach(el=>{el.textContent=s.total;el.hidden=!s.total;});
+  const bar=$("#sideBar");
+  if(bar) bar.style.width=Math.min(100,(s.total/TARGET_EXERCISES)*100)+"%";
+}
+function renderPhoto(){
+  const html=state.photo?`<img src="${state.photo}" alt="">`:"ع";
+  $("#avatarIn").innerHTML=html;
+  $("#pvAvatar").innerHTML=html;
+}
+function handlePhoto(file){
+  if(!file||!/^image\//.test(file.type)) return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    const img=new Image();
+    img.onload=()=>{
+      try{
+        const r=Math.min(1,400/Math.max(img.width,img.height));
+        const c=document.createElement("canvas");
+        c.width=Math.round(img.width*r); c.height=Math.round(img.height*r);
+        c.getContext("2d").drawImage(img,0,0,c.width,c.height);
+        state.photo=c.toDataURL("image/jpeg",0.9);
+      }catch(err){state.photo=ev.target.result;}
+      renderPhoto(); scheduleExport();
+    };
+    img.onerror=()=>{state.photo=ev.target.result;renderPhoto();scheduleExport();};
+    img.src=ev.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+$("#avatarBtn").addEventListener("click",()=>$("#photoInput").click());
+$("#choosePhoto").addEventListener("click",()=>$("#photoInput").click());
+$("#photoInput").addEventListener("change",e=>{handlePhoto(e.target.files&&e.target.files[0]);e.target.value="";});
+$("#removePhoto").addEventListener("click",()=>{state.photo="";renderPhoto();scheduleExport();});
+
+/* =========================================================
+   المعاينة
+   ========================================================= */
+function renderPreview(){
+  $("#pvWorkout").textContent=$("#workoutName").value.trim()||"برنامج تدريبي";
+  $("#pvClient").textContent=$("#clientName").value.trim()||"برنامج تدريبي احترافي";
+  $("#pvLevel").textContent="المستوى: "+levelName();
+  const box=$("#pvList");
+  if(!state.selected.length){
+    box.innerHTML=`<div class="empty" style="margin-top:14px"><i class="fa-solid fa-clipboard-list"></i> أضف تمارين لعرض البرنامج هنا</div>`;
+    return;
+  }
+  box.innerHTML=state.selected.map((it,i)=>{
+    const ex=findEx(it.id);
+    if(!ex) return"";
+    return`<div class="pv">
+      <img ${imgAttrs(ex)}>
+      ${mapHTML(ex,"lg")}
+      <div style="min-width:0">
+        <div class="pv-name"><b>${i+1}.</b> ${esc(arName(ex))}</div>
+        <div class="pv-sub">${CATEGORY_NAMES[ex.cat]||"تمرين"} • راحة ${it.rest} ث • <span class="en">${esc(ex.name)}</span></div>
+        ${tagsHTML(ex)}
+      </div>
+      <div class="pv-val">${it.sets} × ${it.reps}<small>مجموعات × تكرار</small></div>
+      <div class="pv-more">
+        <div class="box"><h4><i class="fa-solid fa-bullseye"></i> بيعمل إيه في الجسم؟</h4>${esc(benefit(ex))}</div>
+        <div class="box"><details><summary><i class="fa-solid fa-person-chalkboard"></i> طريقة الأداء <i class="fa-solid fa-chevron-down arr"></i></summary><ol>${howTo(ex).map(s=>`<li>${esc(s)}</li>`).join("")}</ol></details></div>
+      </div>
+    </div>`;
+  }).join("");
+}
+function renderAll(){
+  renderSelected();
+  renderStats();
+  renderPhoto();
+  renderPreview();
+  if($("#picker").classList.contains("show")) renderPicker();
+  if($("#detail").classList.contains("show")) updateDetailAction();
+  scheduleExport();
+}
+$("#clientName").addEventListener("input",()=>{renderPreview();scheduleExport();});
+$("#workoutName").addEventListener("input",()=>{renderPreview();scheduleExport();});
+$("#levelSelect").addEventListener("change",()=>{renderPreview();scheduleExport();});
+
+/* =========================================================
+   أدوات Canvas
+   ========================================================= */
+function setStatus(msg,type){
+  const el=$("#exportStatus");
+  el.textContent=msg||"";
+  el.className="status"+(type?" "+type:"");
+}
+function rr(ctx,x,y,w,h,r){
+  r=Math.min(r,w/2,h/2);
+  ctx.beginPath(); ctx.moveTo(x+r,y);
+  ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r);
+  ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath();
+}
+function txt(ctx,font,color,align,dir){
+  ctx.font=font; ctx.fillStyle=color; ctx.textAlign=align||"right";
+  try{ctx.direction=dir||"rtl";}catch(e){}
+}
+function fit(ctx,text,maxW){
+  text=String(text);
+  if(ctx.measureText(text).width<=maxW) return text;
+  while(text.length>1&&ctx.measureText(text+"…").width>maxW) text=text.slice(0,-1);
+  return text+"…";
+}
+function wrap(ctx,text,maxW,maxLines){
+  const words=String(text).split(/\s+/).filter(Boolean),lines=[];
+  let line="";
+  for(let i=0;i<words.length;i++){
+    const test=line?line+" "+words[i]:words[i];
+    if(!line||ctx.measureText(test).width<=maxW) line=test;
+    else{
+      lines.push(line); line=words[i];
+      if(lines.length===maxLines-1){line=words.slice(i).join(" ");break;}
+    }
+  }
+  if(line) lines.push(line);
+  lines.length=Math.min(lines.length,maxLines);
+  if(lines.length) lines[lines.length-1]=fit(ctx,lines[lines.length-1],maxW);
+  return lines;
+}
+async function loadFonts(){
+  try{
+    if(!document.fonts) return;
+    await Promise.all(["900 36px Cairo","800 16px Cairo","700 14px Cairo","600 14px Cairo","900 56px Inter","800 14px Inter","600 13px Inter"]
+      .map(f=>document.fonts.load(f,"CAP أبجد 123")));
+  }catch(e){}
+}
+async function loadImg(urls){
+  for(const url of urls){
+    if(!url) continue;
+    if(imgCache.has(url)) return imgCache.get(url);
+    let src=url;
+    if(!/^data:/i.test(url)){
+      try{
+        const res=await fetch(url,{mode:"cors",credentials:"omit"});
+        if(!res.ok) throw new Error(res.status);
+        src=URL.createObjectURL(await res.blob());
+      }catch(e){continue;}
+    }
+    const img=await new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src=src;});
+    if(img){imgCache.set(url,img);return img;}
+  }
+  return null;
+}
+function drawCover(ctx,img,x,y,w,h,r){
+  ctx.save(); rr(ctx,x,y,w,h,r); ctx.clip();
+  ctx.fillStyle="#08080a"; ctx.fillRect(x,y,w,h);
+  if(img){
+    const k=Math.max(w/img.width,h/img.height),iw=img.width*k,ih=img.height*k;
+    ctx.drawImage(img,x+(w-iw)/2,y+(h-ih)/2,iw,ih);
+  }else{
+    txt(ctx,"900 26px Inter, Arial","#e0b83f","center","ltr");
+    ctx.textBaseline="middle"; ctx.fillText("CAP",x+w/2,y+h/2); ctx.textBaseline="alphabetic";
+  }
+  ctx.restore();
+}
+function drawMap(ctx,ex,rightX,y,h){
+  const mv=muscleViews(ex);
+  if(!mv) return 0;
+  const pad=6,s=(h-pad*2)/mv.height,w=mv.width*s+pad*2,x=rightX-w;
+  ctx.save(); rr(ctx,x,y,w,h,12); ctx.fillStyle="#fff"; ctx.fill();
+  ctx.translate(x+pad,y+pad); ctx.scale(s,s);
+  try{ctx.direction="ltr";}catch(e){}
+  drawMuscleViews(ctx,mv);
+  ctx.restore();
+  return w;
+}
+function drawTags(ctx,ex,rightX,leftX,y,maxLines){
+  const tags=[
+    ...(ex.primaryMuscles||[]).filter(m=>MUSCLE_AR[m]).map(m=>({t:MUSCLE_AR[m],p:true})),
+    ...(ex.secondaryMuscles||[]).filter(m=>MUSCLE_AR[m]).map(m=>({t:MUSCLE_AR[m],p:false}))
+  ];
+  const H=26,PAD=11,GAP=6;
+  let cx=rightX,line=0;
+  txt(ctx,"800 13px Cairo, Arial","#fff","center","rtl");
+  ctx.textBaseline="middle";
+  for(const tg of tags){
+    const w=ctx.measureText(tg.t).width+PAD*2;
+    if(cx-w<leftX&&cx!==rightX){line++;if(line>=maxLines) break;cx=rightX;}
+    const ty=y+line*(H+6);
+    rr(ctx,cx-w,ty,w,H,H/2); ctx.fillStyle=tg.p?"#dc2626":"#fed7aa"; ctx.fill();
+    ctx.fillStyle=tg.p?"#fff":"#7c2d12"; ctx.fillText(tg.t,cx-w/2,ty+H/2+1);
+    cx-=w+GAP;
+  }
+  ctx.textBaseline="alphabetic";
+}
+
+/* =========================================================
+   رسم صفحة PNG واحدة
+   ========================================================= */
+async function renderPage(pageItems,pageNum,totalPages,photo,allImgs,globalOffset){
+  const W=1080,P=48,COVER=340,ROW=236,GAP=14;
+  const statsY=COVER+28,statsH=90,rowsY=statsY+statsH+24;
+  const H=rowsY+pageItems.length*(ROW+GAP)+60;
+  let scale=Math.min(2,Math.sqrt((IS_IOS?12e6:32e6)/(W*H)));
+  scale=Math.max(0.3,Math.min(scale,16000/H));
+  const canvas=document.createElement("canvas");
+  canvas.width=Math.round(W*scale); canvas.height=Math.round(H*scale);
+  const ctx=canvas.getContext("2d");
+  if(!ctx) throw new Error("Canvas غير مدعوم");
+  ctx.scale(scale,scale);
+  const client=$("#clientName").value.trim()||"عميل";
+  const workout=$("#workoutName").value.trim()||"برنامج تدريبي";
+  const R=W-P;
+
+  ctx.fillStyle="#08080a"; ctx.fillRect(0,0,W,H);
+  ctx.fillStyle="#111114"; ctx.fillRect(0,0,W,COVER);
+  const g=ctx.createRadialGradient(W*0.05,0,0,W*0.05,0,W*0.55);
+  g.addColorStop(0,"rgba(224,184,63,0.22)"); g.addColorStop(1,"rgba(224,184,63,0)");
+  ctx.fillStyle=g; ctx.fillRect(0,0,W,COVER);
+  ctx.fillStyle="#e0b83f"; ctx.fillRect(0,COVER-4,W,4);
+
+  txt(ctx,"900 13px Inter, Arial","#e0b83f","right","ltr");
+  ctx.fillText("PERSONAL TRAINING PROGRAM",R,72);
+
+  ctx.font="900 52px Inter, Arial";
+  const a="CAP ",b="/ "+state.coach;
+  const wa=ctx.measureText(a).width;
+  const x0=Math.max(P,R-wa-ctx.measureText(b).width);
+  txt(ctx,"900 52px Inter, Arial","#fff","left","ltr");
+  ctx.fillText(a,x0,136);
+  ctx.fillStyle="#e0b83f";
+  ctx.fillText(fit(ctx,b,R-x0-wa),x0+wa,136);
+  ctx.fillRect(R-80,162,80,3);
+
+  txt(ctx,"900 34px Cairo, Arial","#fff","right","rtl");
+  ctx.fillText(fit(ctx,workout,W-P*2-130),R-130,218);
+
+  if(totalPages>1){
+    txt(ctx,"800 14px Inter, Arial","#e0b83f","right","ltr");
+    ctx.fillText(`PAGE ${pageNum} / ${totalPages}`,R,256);
+  }
+
+  const pcx=R-46,pcy=290,pr=44;
+  ctx.save(); ctx.beginPath(); ctx.arc(pcx,pcy,pr,0,Math.PI*2); ctx.fillStyle="#18181e"; ctx.fill(); ctx.clip();
+  if(photo){
+    const k=Math.max(pr*2/photo.width,pr*2/photo.height),iw=photo.width*k,ih=photo.height*k;
+    ctx.drawImage(photo,pcx-iw/2,pcy-ih/2,iw,ih);
+  }else{
+    txt(ctx,"900 34px Cairo, Arial","#e0b83f","center","rtl");
+    ctx.textBaseline="middle"; ctx.fillText("ع",pcx,pcy+2); ctx.textBaseline="alphabetic";
+  }
+  ctx.restore();
+  ctx.beginPath(); ctx.arc(pcx,pcy,pr,0,Math.PI*2); ctx.lineWidth=4; ctx.strokeStyle="#e0b83f"; ctx.stroke();
+
+  txt(ctx,"900 21px Cairo, Arial","#fff","right","rtl");
+  ctx.fillText(fit(ctx,"اللاعب: "+client,W-P*2-130),R-112,280);
+  txt(ctx,"800 15px Cairo, Arial","#ffe08a","right","rtl");
+  ctx.fillText("المستوى: "+levelName(),R-112,308);
+
+  const st=getStats();
+  const stList=[{v:st.total,l:"التمارين"},{v:st.strength,l:"مقاومة"},{v:st.cardio,l:"كارديو"}];
+  const sg=16,sw=(W-P*2-sg*2)/3;
+  stList.forEach((s,i)=>{
+    const sx=R-(i+1)*sw-i*sg;
+    rr(ctx,sx,statsY,sw,statsH,14); ctx.fillStyle="#141418"; ctx.fill();
+    ctx.lineWidth=1; ctx.strokeStyle="#333"; ctx.stroke();
+    txt(ctx,"900 30px Inter, Arial","#e0b83f","center","ltr"); ctx.fillText(String(s.v),sx+sw/2,statsY+46);
+    txt(ctx,"700 13px Cairo, Arial","#aaa","center","rtl"); ctx.fillText(s.l,sx+sw/2,statsY+70);
+  });
+
+  pageItems.forEach((o,localIdx)=>{
+    const{it,ex}=o;
+    const globalIdx=globalOffset+localIdx;
+    const img=allImgs[globalOffset+localIdx];
+    const y=rowsY+localIdx*(ROW+GAP),cy=y+ROW/2;
+    rr(ctx,P,y,W-P*2,ROW,16); ctx.fillStyle="#141418"; ctx.fill();
+    ctx.lineWidth=1; ctx.strokeStyle="#333"; ctx.stroke();
+
+    const nX=R-16-52;
+    rr(ctx,nX,cy-26,52,52,12); ctx.fillStyle="#e0b83f"; ctx.fill();
+    txt(ctx,"900 22px Inter, Arial","#0a0a0a","center","ltr");
+    ctx.textBaseline="middle"; ctx.fillText(String(globalIdx+1),nX+26,cy+1); ctx.textBaseline="alphabetic";
+
+    const iw=175,ih=130,ix=nX-16-iw;
+    drawCover(ctx,img,ix,cy-ih/2,iw,ih,12);
+
+    const mw=drawMap(ctx,ex,ix-16,y+12,ROW-24);
+    const tR=ix-16-(mw?mw+18:0);
+    const vW=135,vH=70,vX=P+16;
+    rr(ctx,vX,cy-vH/2,vW,vH,12); ctx.fillStyle="rgba(224,184,63,0.08)"; ctx.fill();
+    ctx.strokeStyle="rgba(224,184,63,0.4)"; ctx.lineWidth=1.5; ctx.stroke();
+    txt(ctx,"900 22px Inter, Arial","#ffe08a","center","ltr");
+    ctx.fillText(`${it.sets} × ${it.reps}`,vX+vW/2,cy+2);
+    txt(ctx,"700 12px Cairo, Arial","#aaa","center","rtl");
+    ctx.fillText(`راحة ${it.rest} ث`,vX+vW/2,cy+24);
+
+    const tL=vX+vW+18,tW=Math.max(60,tR-tL);
+    txt(ctx,"900 23px Cairo, Arial","#fff","right","rtl");
+    ctx.fillText(fit(ctx,arName(ex),tW),tR,y+46);
+    txt(ctx,"600 13px Inter, Arial","#999","right","ltr");
+    ctx.fillText(fit(ctx,ex.name,tW),tR,y+70);
+    drawTags(ctx,ex,tR,tL,y+84,2);
+    txt(ctx,"600 14px Cairo, Arial","#bdbdbd","right","rtl");
+    wrap(ctx,shortBenefit(ex),tW,2).forEach((ln,k)=>ctx.fillText(ln,tR,y+180+k*24));
+  });
+
+  txt(ctx,"700 13px Inter, Arial","#666","center","ltr");
+  ctx.fillText(`CAP / ${state.coach} • PERSONAL TRAINING${totalPages>1?" • PAGE "+pageNum+"/"+totalPages:""}`,W/2,H-26);
+  return canvas;
+}
+
+function dataURLToBlob(d){
+  const parts=d.split(","),mime=(parts[0].match(/:(.*?);/)||[])[1]||"image/png";
+  const bin=atob(parts[1]),arr=new Uint8Array(bin.length);
+  for(let i=0;i<bin.length;i++) arr[i]=bin.charCodeAt(i);
+  return new Blob([arr],{type:mime});
+}
+function canvasToBlob(c){
+  return new Promise((res,rej)=>{
+    try{
+      if(c.toBlob) c.toBlob(b=>{if(b) res(b); else{try{res(dataURLToBlob(c.toDataURL("image/png")));}catch(e){rej(e);}}}, "image/png");
+      else res(dataURLToBlob(c.toDataURL("image/png")));
+    }catch(e){rej(e);}
+  });
+}
+
+/* =========================================================
+   بناء الـ PNG pages
+   ========================================================= */
+function scheduleExport(){
+  clearTimeout(exp.timer);
+  exp.timer=setTimeout(()=>{exp.timer=null;buildExport();},800);
+}
+async function buildExport(){
+  const gen=++exp.gen;
+  exp.urls.forEach(u=>{try{URL.revokeObjectURL(u);}catch(e){}});
+  exp.urls=[]; exp.blobs=[]; exp.names=[];
+  if(!state.selected.length||!state.coach){
+    $("#shareBtn").hidden=true;
+    setStatus(""); return;
+  }
+  try{
+    setStatus("جاري تجهيز الصور...","work");
+    await loadFonts();
+    const items=state.selected.map(it=>({it,ex:findEx(it.id)})).filter(o=>o.ex);
+    const photo=state.photo?await loadImg([state.photo]):null;
+    const allImgs=await Promise.all(items.map(o=>loadImg([imgUrl(o.ex,0,0),imgUrl(o.ex,0,1)])));
+    if(gen!==exp.gen) return;
+    const totalPages=Math.ceil(items.length/EXERCISES_PER_PAGE);
+    const blobs=[],urls=[],names=[];
+    const baseName=`CAP-${safeName(state.coach)}-${safeName($("#clientName").value)}`;
+    for(let p=0;p<totalPages;p++){
+      if(gen!==exp.gen) return;
+      const pageItems=items.slice(p*EXERCISES_PER_PAGE,(p+1)*EXERCISES_PER_PAGE);
+      const canvas=await renderPage(pageItems,p+1,totalPages,photo,allImgs,p*EXERCISES_PER_PAGE);
+      const blob=await canvasToBlob(canvas);
+      if(!blob) throw new Error("فشل تحويل الصورة");
+      const url=URL.createObjectURL(blob);
+      const name=totalPages>1?`${baseName}-page${p+1}.png`:`${baseName}.png`;
+      blobs.push(blob); urls.push(url); names.push(name);
+    }
+    if(gen!==exp.gen){urls.forEach(u=>URL.revokeObjectURL(u));return;}
+    exp.blobs=blobs; exp.urls=urls; exp.names=names;
+    let canShare=false;
+    try{
+      const files=blobs.map((b,i)=>new File([b],names[i],{type:"image/png"}));
+      canShare=!!(navigator.canShare&&navigator.canShare({files}));
+    }catch(e){}
+    $("#shareBtn").hidden=!canShare;
+    const msg=totalPages>1?`✅ ${totalPages} صور جاهزة`:"✅ الصورة جاهزة للتحميل";
+    setStatus(msg,"ok");
+  }catch(err){
+    console.error(err);
+    if(gen===exp.gen) setStatus("❌ تعذر تجهيز الصورة: "+(err&&err.message||err),"err");
+  }
+}
+async function ensureExport(){
+  if(!state.selected.length) return false;
+  if(exp.blobs.length&&!exp.timer&&!exp.promise) return true;
+  clearTimeout(exp.timer); exp.timer=null;
+  if(!exp.promise) exp.promise=buildExport().finally(()=>{exp.promise=null;});
+  await exp.promise;
+  return exp.blobs.length>0;
+}
+
+/* =========================================================
+   عرض الفيور
+   ========================================================= */
+function openViewer(){
+  if(!exp.urls.length) return;
+  const viewer=$("#viewer");
+  viewer.innerHTML=`
+    <button id="viewerClose" class="btn btn-gold btn-sm close" type="button"><i class="fa-solid fa-xmark"></i> إغلاق</button>
+    <p>اضغط على الصورة ضغطة مطوّلة واختر «حفظ الصورة».</p>
+    ${exp.urls.map((u,i)=>`<img src="${u}" alt="صفحة ${i+1}" style="display:block;width:min(100%,900px);height:auto;margin:0 auto 16px;border-radius:12px;-webkit-touch-callout:default;user-select:auto">`).join("")}
+  `;
+  document.getElementById("viewerClose").addEventListener("click",closeViewer);
+  viewer.hidden=false;
+  syncLock();
+}
+
+async function shareImages(){
+  const files=exp.blobs.map((b,i)=>new File([b],exp.names[i],{type:"image/png"}));
+  await navigator.share({files,title:exp.names[0]});
+}
+function downloadAll(){
+  exp.blobs.forEach((blob,i)=>{
+    const url=URL.createObjectURL(blob),a=document.createElement("a");
+    a.href=url; a.download=exp.names[i]; a.rel="noopener"; a.style.display="none";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),10000);
+  });
+}
+async function saveImages(){
+  if(IS_IOS){
+    try{
+      const files=exp.blobs.map((b,i)=>new File([b],exp.names[i],{type:"image/png"}));
+      if(navigator.canShare&&navigator.canShare({files})){await shareImages();return;}
+    }catch(err){if(err&&err.name==="AbortError") return;}
+    openViewer(); return;
+  }
+  try{downloadAll();toast(exp.blobs.length>1?`تم تحميل ${exp.blobs.length} صور ✅`:"تم تحميل الصورة ✅");}catch(e){openViewer();}
+}
+
+/* =========================================================
+   نافذة نتيجة التصدير (مشاركة / حفظ في الملفات)
+   بتشتغل على كل الأجهزة بما فيها الآيفون — بدون window.open
+   عشان iOS بيحظره بعد العمليات الـ async
+   ========================================================= */
+const IN_APP = /Instagram|FBAN|FBAV|FB_IAB|TikTok|musical_ly|Snapchat|Twitter|Line\//i.test(navigator.userAgent);
+const outBox = document.createElement("div");
+outBox.id = "pdfOut";
+outBox.className = "pdf-out";
+outBox.hidden = true;
+document.body.appendChild(outBox);
+let outUrls = [];
+function closeOut(){
+  outBox.hidden = true; outBox.innerHTML = "";
+  outUrls.forEach(u => { try{ URL.revokeObjectURL(u); }catch(e){} });
+  outUrls = [];
+  syncLock();
+}
+function showOut(cfg){
+  outUrls.forEach(u => { try{ URL.revokeObjectURL(u); }catch(e){} });
+  outUrls = cfg.urls || [];
+  let canShare = false;
+  try{ canShare = !!(navigator.canShare && navigator.share && navigator.canShare({ files: cfg.files })); }catch(e){}
+  const acts = [];
+  if(canShare) acts.push(`<button class="btn btn-gold" type="button" data-oact="share"><i class="fa-solid fa-share-nodes"></i> مشاركة / حفظ في الملفات</button>`);
+  acts.push(`<a class="btn btn-outline" href="${cfg.fileUrl}" target="_blank" rel="noopener"><i class="fa-solid fa-up-right-from-square"></i> فتح الـ PDF</a>`);
+  if(!IS_IOS) acts.push(`<a class="btn btn-ghost" href="${cfg.fileUrl}" download="${esc(cfg.files[0].name)}"><i class="fa-solid fa-download"></i> تحميل الـ PDF</a>`);
+  const warn = (IS_IOS && IN_APP)
+    ? `<p class="pdf-warn">⚠️ أنت فاتح الموقع من جوه تطبيق (Instagram / Facebook / TikTok). التحميل ممكن ما يشتغلش — افتح الموقع من Safari عشان تحفظ الملف.</p>`
+    : "";
+  outBox.innerHTML = `<div class="pdf-outbox">
+    <button class="mclose" type="button" data-oact="close" aria-label="إغلاق"><i class="fa-solid fa-xmark"></i></button>
+    <h3>${esc(cfg.title)}</h3>
+    <p>${esc(cfg.hint)}</p>
+    ${warn}
+    <div class="pdf-outacts">${acts.join("")}</div>
+    <div class="pdf-prev">${cfg.previews.map((s, i) => `<img src="${s}" alt="صفحة ${i + 1}">`).join("")}</div>
+  </div>`;
+  outBox.onclick = e => {
+    const b = e.target.closest("[data-oact]");
+    if(e.target === outBox){ closeOut(); return; }
+    if(!b) return;
+    const a = b.dataset.oact;
+    if(a === "close") closeOut();
+    else if(a === "share"){
+      navigator.share({ files: cfg.files, title: cfg.files[0].name }).catch(err => {
+        if(!err || err.name !== "AbortError") toast("تعذرت المشاركة، جرّب زر فتح الـ PDF");
+      });
+    }
+  };
+  outBox.hidden = false; outBox.scrollTop = 0;
+  syncLock();
+}
+function blobToDataURL(blob){
+  return new Promise((res, rej) => {
+    const fr = new FileReader();
+    fr.onload = () => res(fr.result);
+    fr.onerror = rej;
+    fr.readAsDataURL(blob);
+  });
+}
+function loadImageEl(src){
+  return new Promise(res => {
+    const im = new Image();
+    im.onload = () => res(im);
+    im.onerror = () => res(null);
+    im.src = src;
+  });
+}
+
+/* =========================================================
+   تصدير PDF - يعمل على iOS وAndroid وDesktop
+   ========================================================= */
+async function exportPDF(){
+  if(!state.selected.length){ toast("أضف تمارين أولاً"); return; }
+  const lib = window.jspdf && window.jspdf.jsPDF;
+  if(!lib){ toast("❌ مكتبة PDF لم تُحمَّل، تأكد من الاتصال بالإنترنت"); return; }
+  setStatus("جاري تجهيز ملف PDF...", "work");
+  try{
+    await loadFonts();
+    const ok = await ensureExport();
+    if(!ok){ setStatus("❌ تعذر تجهيز الصور", "err"); return; }
+
+    const pdf = new lib({ orientation: "portrait", unit: "px", format: [1080, 1080 * 1.41], compress: true });
+    const PW = pdf.internal.pageSize.getWidth();
+    const PH = pdf.internal.pageSize.getHeight();
+    const previews = [];
+
+    for(let i = 0; i < exp.blobs.length; i++){
+      if(i > 0) pdf.addPage();
+      const pngUrl = await blobToDataURL(exp.blobs[i]);
+      const im = await loadImageEl(pngUrl);
+      let dataUrl = pngUrl, fmt = "PNG", ratio = PW / PH;
+      if(im){
+        ratio = im.width / im.height;
+        try{
+          const c = document.createElement("canvas");
+          c.width = im.width; c.height = im.height;
+          const cx = c.getContext("2d");
+          cx.fillStyle = "#08080a"; cx.fillRect(0, 0, c.width, c.height);
+          cx.drawImage(im, 0, 0);
+          dataUrl = c.toDataURL("image/jpeg", 0.92); fmt = "JPEG";
+          c.width = 1; c.height = 1;
+        }catch(e){ dataUrl = pngUrl; fmt = "PNG"; }
+      }
+      /* نحسب الأبعاد للحفاظ على النسبة */
+      let dw = PW, dh = PW / ratio;
+      if(dh > PH){ dh = PH; dw = PH * ratio; }
+      const dx = (PW - dw) / 2, dy = (PH - dh) / 2;
+      pdf.setFillColor(8, 8, 10);
+      pdf.rect(0, 0, PW, PH, "F");
+      pdf.addImage(dataUrl, fmt, dx, dy, dw, dh, undefined, "FAST");
+      previews.push(dataUrl);
+    }
+
+    const fileName = `CAP-${safeName(state.coach)}-${safeName($("#clientName").value)}.pdf`;
+    const blob = pdf.output("blob");
+    const file = new File([blob], fileName, { type: "application/pdf" });
+    const fileUrl = URL.createObjectURL(blob);
+
+    showOut({
+      title: "ملف الـ PDF جاهز ✅",
+      hint: IS_IOS
+        ? "اضغط «مشاركة / حفظ في الملفات» ثم اختار Save to Files. ولو الزر مش ظاهر، اضغط «فتح الـ PDF» ثم أيقونة Share ثم Save to Files."
+        : "اضغط «تحميل الـ PDF» أو «مشاركة» لو متاحة على جهازك.",
+      previews,
+      urls: [fileUrl],
+      files: [file],
+      fileUrl
+    });
+    setStatus("✅ PDF جاهز", "ok");
+
+  }catch(err){
+    console.error(err);
+    setStatus("❌ تعذر تجهيز PDF: " + (err && err.message || err), "err");
+  }
+}
+
+/* =========================================================
+   أزرار التصدير
+   ========================================================= */
+async function withBusy(btn,fn){
+  if(!state.selected.length){toast("أضف تمارين أولاً");return;}
+  btn.classList.add("busy");
+  try{await fn();}finally{btn.classList.remove("busy");}
+}
+$("#exportBtn").addEventListener("click",()=>withBusy($("#exportBtn"),async()=>{
+  toast("جاري تجهيز الصور...");
+  exp.blobs=[];exp.urls=[];exp.names=[];
+  const ok=await ensureExport();
+  if(!ok){toast("تعذر تجهيز الصورة، حاول مرة أخرى");return;}
+  await saveImages();
+}));
+$("#exportPdfBtn").addEventListener("click",()=>withBusy($("#exportPdfBtn"),exportPDF));
+$("#downloadBtn").addEventListener("click",()=>withBusy($("#downloadBtn"),async()=>{
+  if(!exp.blobs.length||exp.timer) toast("جاري تجهيز الصور...");
+  const ok=await ensureExport();
+  if(!ok){toast("تعذر تجهيز الصورة، حاول مرة أخرى");return;}
+  await saveImages();
+}));
+$("#shareBtn").addEventListener("click",()=>withBusy($("#shareBtn"),async()=>{
+  const ok=await ensureExport();
+  if(!ok){toast("تعذر تجهيز الصورة");return;}
+  try{await shareImages();}catch(err){if(!err||err.name!=="AbortError") openViewer();}
+}));
+$("#openBtn").addEventListener("click",()=>withBusy($("#openBtn"),async()=>{
+  if(!exp.blobs.length||exp.timer) toast("جاري تجهيز الصور...");
+  await ensureExport();
+  if(exp.urls.length) openViewer(); else toast("تعذر تجهيز الصورة، حاول مرة أخرى");
+}));
+
+/* =========================================================
+   التشغيل
+   ========================================================= */
+(function init(){
+  let saved=null;
+  try{saved=sessionStorage.getItem(SESSION_KEY);}catch(e){}
+  if(saved&&DEMO_COACHES.some(c=>c.name===saved)) showApp(saved);
+  loadDatabase();
+})();
+</script>
+<script src="nutrition.js"></script>
+</body>
+</html>
